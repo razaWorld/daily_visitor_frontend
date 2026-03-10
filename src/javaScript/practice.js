@@ -1,25 +1,44 @@
-import { log } from "node:console";
+const BASE_URL = "https://jsonplaceholder.typicode.com";
 
-let arr = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "a",
-  "b",
-  "c",
-  "a",
+// ✅ GET - Read data
+const getUser = async () => {
+  const res = await fetch(`${BASE_URL}/users/1`);
+  const data = await res.json();
+  console.log("GET:", data);
+};
 
-  
-];let count = {};
+// ✅ POST - Create new data
+const createUser = async () => {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: "Ali Raza", age: 21, grade: "A" }),
+  });
+  const data = await res.json();
+  console.log("POST:", data);
+};
 
-for (let i = 0; i < arr.length; i++) { 
-    let item = arr[i];
-    if (count[item]) {
-        count[item]++;
-    } else {
-        count[item] = 1;
-    }                   
- }
-console.log(count);
+// ✅ PUT - Update existing data
+const updateUser = async () => {
+  const res = await fetch(`${BASE_URL}/users/1`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: "Ali Updated", age: 22 }),
+  });
+  const data = await res.json();
+  console.log("PUT:", data);
+};
+
+// ✅ DELETE - Remove data
+const deleteUser = async () => {
+  const res = await fetch(`${BASE_URL}/users/1`, {
+    method: "DELETE",
+  });
+  console.log("DELETE status:", res.status); // 200 = success
+};
+
+// Call them
+getUser();
+createUser();
+updateUser();
+deleteUser();
